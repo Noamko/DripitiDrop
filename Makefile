@@ -9,17 +9,20 @@ CONFIG := FlashMode=dio,CDCOnBoot=cdc
 
 # Targets
 .PHONY: build upload clean all
-all: $(BOARD) upload
+all: compile_commands.json
 $(BOARD):
 	@echo "Building..."
 	mkdir -p $(BUILD_DIR)
 	arduino-cli compile --fqbn $(BOARD_TYPE):$(CONFIG) $(SRC) -v --build-path $(BUILD_DIR)
 
+compile_commands.json: $(BOARD)
+	@echo "Generating compile_commands.json..."
+	cp $(BUILD_DIR)/compile_commands.json .
+
 upload:
 	@echo "Uploading..."
 	arduino-cli upload -p $(SERIAL_PORT) --fqbn $(BOARD_TYPE):$(CONFIG) $(SRC) -v --input-dir $(BUILD_DIR)
 	
-
 clean:
 	@echo "Cleaning..."
 	rm -rf $(BUILD_DIR)
