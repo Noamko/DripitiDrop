@@ -3,7 +3,7 @@ BOARD := esp32c3
 SRC := DripitiDrop.ino
 AVR := esp32:esp32
 BUILD_DIR := build
-SERIAL_PORT := /dev/$(shell ls /dev | grep -E -i 'usb' | head -n 1)
+SERIAL_PORT := $(shell arduino-cli board list | awk 'NR-1 {print $1; exit}')
 BOARD_TYPE := $(AVR):$(BOARD)
 CONFIG := FlashMode=dio,CDCOnBoot=cdc
 
