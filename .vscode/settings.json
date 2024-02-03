@@ -1,0 +1,4 @@
+"clangd.arguments": [
+    "-clang-tidy",
+    "-clang-tidy-checks=-*,readability-identifier-naming"
+]

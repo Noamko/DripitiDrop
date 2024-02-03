@@ -18,10 +18,14 @@ $(BOARD):
 compile_commands.json: $(BOARD)
 	@echo "Generating compile_commands.json..."
 	cp $(BUILD_DIR)/compile_commands.json .
+	@echo "done."
 
 upload:
 	@echo "Uploading..."
 	arduino-cli upload -p $(SERIAL_PORT) --fqbn $(BOARD_TYPE):$(CONFIG) $(SRC) -v --input-dir $(BUILD_DIR)
+	
+update-remote:
+	ssh home "cd projects/DripitiDrop && git pull && make upload"
 	
 clean:
 	@echo "Cleaning..."
